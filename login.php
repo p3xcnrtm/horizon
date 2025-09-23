@@ -126,12 +126,12 @@ if (!empty($last_updated)) {
       <form id="loginForm" class="space-y-5">
         <div>
           <label for="email" class="block text-gray-700 mb-1">Email</label>
-          <input id="email" type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+          <input id="email" type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" name="email" required>
           <div id="emailError" class="text-red-500 text-sm mt-1 hidden">Please enter a valid email.</div>
         </div>
         <div>
           <label for="password" class="block text-gray-700 mb-1">Password</label>
-          <input id="password" type="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+          <input id="password" type="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" name="password" required>
           <div id="passwordError" class="text-red-500 text-sm mt-1 hidden">Password is required.</div>
         </div>
         <button type="submit" class="w-full py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition">Login</button>
