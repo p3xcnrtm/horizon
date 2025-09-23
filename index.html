@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Capital | Premium Investment Solutions</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(11,27,103,0.9) 0%, rgba(40,60,134,0.9) 100%);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-bold text-indigo-800">HORIZON</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="index.html" class="nav-link text-indigo-900 font-medium">Home</a>
+                        <a href="real-estate.html" class="nav-link text-gray-600 hover:text-indigo-900 transition">Real Estate</a>
+                        <a href="stocks.html" class="nav-link text-gray-600 hover:text-indigo-900 transition">Stocks</a>
+                        <a href="bonds.html" class="nav-link text-gray-600 hover:text-indigo-900 transition">Bonds</a>
+                        <a href="crypto.html" class="nav-link text-gray-600 hover:text-indigo-900 transition">Crypto</a>
+                        <a href="sign up.html" class="px-6 py-2 bg-indigo-700 text-white rounded-full hover:bg-indigo-800 transition">Sign Up</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-900 focus:outline-none">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div id="hero-bg" class="absolute inset-0 z-0"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-white" data-aos="fade-right">
+                    <h1 class="text-5xl font-bold leading-tight mb-6">Wealth Creation Through <span class="text-indigo-300">Strategic Investments</span></h1>
+                    <p class="text-xl mb-8 text-gray-200">Horizon Capital provides exclusive access to premium investment opportunities across all major asset classes with institutional-grade research.</p>
+                   <div data-aos="fade-up" data-aos-delay="200" class="mt-10">
+                <button onclick="fadeToSignup()" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-medium hover:bg-blue-50 transition duration-300 shadow-lg mr-4">
+                    Create Account
+                </button>
+                <button onclick="showModal('consultation')" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-white hover:text-blue-600 transition duration-300 mt-4 sm:mt-0">
+                    Schedule Consultation
+                </button>
+            </div>
+                </div>
+                <div class="relative" data-aos="fade-left">
+                    <div class="relative z-10 bg-white rounded-2xl shadow-2xl p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Schedule a Consultation</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <input type="email" placeholder="Email Address" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                    <option>Investment Interest</option>
+                                    <option>Real Estate</option>
+                                    <option>Stocks</option>
+                                    <option>Bonds</option>
+                                    <option>Crypto</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition">Request Callback</button>
+                        </form>
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+                    <div class="absolute -bottom-8 -right-6 w-32 h-32 bg-indigo-600 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+      <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full relative">
+        <button onclick="hideModal('signup')" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700">
+          <i data-feather="x"></i>
+        </button>
+        <h2 class="text-2xl font-bold mb-4 text-indigo-800">Create Account</h2>
+        <form class="space-y-4">
+          <input type="text" placeholder="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+          <input type="email" placeholder="Email Address" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+          <input type="password" placeholder="Password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+          <button type="submit" class="w-full py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition">Sign Up</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Investment Categories -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Investment Verticals</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Diversify your portfolio with our expertly curated investment opportunities across multiple asset classes.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="real-estate.html" class="group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('http://static.photos/real-estate/640x360/1')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Real Estate</h3>
+                            <p class="text-gray-600">Premium commercial and residential properties with high yield potential.</p>
+                            <div class="mt-4 flex items-center text-indigo-600 group-hover:text-indigo-800 transition">
+                                <span class="mr-2">Explore</span>
+                                <i data-feather="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="stocks.html" class="group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('http://static.photos/finance/640x360/2')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Stocks</h3>
+                            <p class="text-gray-600">Equity investments in high-growth companies with strong fundamentals.</p>
+                            <div class="mt-4 flex items-center text-indigo-600 group-hover:text-indigo-800 transition">
+                                <span class="mr-2">Explore</span>
+                                <i data-feather="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="bonds.html" class="group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('http://static.photos/finance/640x360/3')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Bonds</h3>
+                            <p class="text-gray-600">Fixed income securities with stable returns and low volatility.</p>
+                            <div class="mt-4 flex items-center text-indigo-600 group-hover:text-indigo-800 transition">
+                                <span class="mr-2">Explore</span>
+                                <i data-feather="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="crypto.html" class="group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('http://static.photos/technology/640x360/4')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Crypto</h3>
+                            <p class="text-gray-600">Digital asset investments with institutional-grade security.</p>
+                            <div class="mt-4 flex items-center text-indigo-600 group-hover:text-indigo-800 transition">
+                                <span class="mr-2">Explore</span>
+                                <i data-feather="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section class="py-20 bg-indigo-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl font-bold mb-6">Consistent Outperformance</h2>
+                    <p class="text-xl text-indigo-200 mb-8">Our proprietary investment strategies have consistently delivered superior returns across market cycles.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center">
+                                    <i data-feather="check" class="w-4 h-4 text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold">15.8% Average Annual Return</h4>
+                                <p class="text-indigo-200">Across all portfolios since inception</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center">
+                                    <i data-feather="check" class="w-4 h-4 text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold">$2.4B Assets Under Management</h4>
+                                <p class="text-indigo-200">Trusted by high-net-worth investors</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center">
+                                    <i data-feather="check" class="w-4 h-4 text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold">24/7 Risk Monitoring</h4>
+                                <p class="text-indigo-200">Proactive portfolio protection</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-xl font-semibold">Portfolio Performance</h3>
+                            <div class="relative">
+                                <select class="appearance-none bg-indigo-800 text-white px-4 py-2 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <option>5 Years</option>
+                                    <option>3 Years</option>
+                                    <option>1 Year</option>
+                                </select>
+                                <i data-feather="chevron-down" class="absolute right-3 top-2.5 w-4 h-4 text-white pointer-events-none"></i>
+                            </div>
+                        </div>
+                        <div class="h-64 bg-white/5 rounded-lg p-4">
+                            <!-- Chart placeholder -->
+                            <div class="h-full flex items-end space-x-1">
+                                <div class="w-8 h-1/4 bg-indigo-400 rounded-t-sm"></div>
+                                <div class="w-8 h-1/3 bg-indigo-400 rounded-t-sm"></div>
+                                <div class="w-8 h-1/2 bg-indigo-400 rounded-t-sm"></div>
+                                <div class="w-8 h-3/4 bg-indigo-400 rounded-t-sm"></div>
+                                <div class="w-8 h-full bg-indigo-600 rounded-t-sm"></div>
+                                <div class="w-8 h-4/5 bg-indigo-400 rounded-t-sm"></div>
+                                <div class="w-8 h-3/5 bg-indigo-400 rounded-t-sm"></div>
+                            </div>
+                            <div class="flex justify-between mt-4 text-sm text-indigo-200">
+                                <span>2018</span>
+                                <span>2019</span>
+                                <span>2020</span>
+                                <span>2021</span>
+                                <span>2022</span>
+                                <span>2023</span>
+                                <span>2024</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                            <div class="bg-white/5 p-3 rounded-lg">
+                                <p class="text-sm text-indigo-200">1 Year</p>
+                                <p class="text-xl font-bold">+18.2%</p>
+                            </div>
+                            <div class="bg-white/5 p-3 rounded-lg">
+                                <p class="text-sm text-indigo-200">3 Year</p>
+                                <p class="text-xl font-bold">+52.4%</p>
+                            </div>
+                            <div class="bg-white/5 p-3 rounded-lg">
+                                <p class="text-sm text-indigo-200">5 Year</p>
+                                <p class="text-xl font-bold">+98.7%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Client Success Stories</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Don't just take our word for it. Here's what our clients say about working with us.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-8 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold mr-4">JD</div>
+                        <div>
+                            <h4 class="font-semibold">James Donovan</h4>
+                            <p class="text-sm text-gray-500">Tech Entrepreneur</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Horizon's real estate team helped me build a diversified property portfolio that now generates passive income covering all my living expenses."</p>
+                    <div class="flex text-yellow-400">
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold mr-4">SM</div>
+                        <div>
+                            <h4 class="font-semibold">Sarah Mitchell</h4>
+                            <p class="text-sm text-gray-500">Retired Executive</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"The bond strategies Horizon implemented preserved my capital during market downturns while still delivering steady returns above inflation."</p>
+                    <div class="flex text-yellow-400">
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold mr-4">RK</div>
+                        <div>
+                            <h4 class="font-semibold">Robert Kim</h4>
+                            <p class="text-sm text-gray-500">Crypto Investor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Their crypto advisory service helped me navigate the volatile digital asset markets with institutional-grade research I couldn't find elsewhere."</p>
+                    <div class="flex text-yellow-400">
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-800 to-indigo-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-6">Ready to Grow Your Wealth?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Schedule a complimentary consultation with one of our investment specialists to discuss your financial goals.</p>
+            <a href="#" class="inline-flex items-center px-8 py-4 bg-white text-indigo-800 font-bold rounded-full hover:bg-gray-100 transition">
+                <span>Book Consultation</span>
+                <i data-feather="arrow-right" class="ml-2 w-5 h-5"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Horizon Capital</h3>
+                    <p class="text-gray-400 mb-4">Premium investment solutions for discerning clients seeking wealth preservation and growth.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Investments</h4>
+                    <ul class="space-y-3">
+                        <li><a href="real-estate.html" class="text-gray-400 hover:text-white transition">Real Estate</a></li>
+                        <li><a href="stocks.html" class="text-gray-400 hover:text-white transition">Stocks</a></li>
+                        <li><a href="bonds.html" class="text-gray-400 hover:text-white transition">Bonds</a></li>
+                        <li><a href="crypto.html" class="text-gray-400 hover:text-white transition">Crypto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Our Team</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">News</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Contact</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-feather="map-pin" class="w-5 h-5 mr-3 mt-0.5 text-gray-400"></i>
+                            <span class="text-gray-400">450 Park Avenue, New York, NY 10022</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-feather="mail" class="w-5 h-5 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@horizoncapital.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-feather="phone" class="w-5 h-5 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+1 (212) 555-0100</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 Horizon Capital. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Disclosures</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Vanta.js globe effect on the background div
+        VANTA.GLOBE({
+            el: "#hero-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3a56c4,
+            backgroundColor: 0x0b1b67,
+            size: 1.10
+        });
+
+        function showModal(type) {
+            if(type === 'signup') {
+                document.getElementById('signup-modal').classList.remove('hidden');
+                feather.replace();
+            }
+            // Add more modals as needed
+        }
+        function hideModal(type) {
+            if(type === 'signup') {
+                document.getElementById('signup-modal').classList.add('hidden');
+            }
+        }
+
+        function fadeToSignup() {
+            document.body.classList.add('fade-out');
+            setTimeout(function() {
+                window.location.href = 'sign up.html';
+            }, 700);
+        }
+    </script>
+    <script>AOS.init();</script>
+    <script>feather.replace();</script>
+</body>
+</html>

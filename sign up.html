@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | Horizon Capital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, rgba(11,27,103,0.9) 0%, rgba(40,60,134,0.9) 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #fff;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover:after {
+      width: 100%;
+    }
+
+    .signup-container {
+      background: #fff;
+      padding: 40px 35px;
+      border-radius: 16px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      margin: 48px auto 32px auto;
+    }
+
+    .signup-container h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+      color: #0a3d62;
+    }
+
+    .signup-container p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #0a3d62;
+    }
+
+    .terms {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .terms label {
+      margin-bottom: 0;
+      font-weight: 400;
+      display: inline;
+      color: #555;
+    }
+
+    .terms a {
+      color: #0a3d62;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .terms a:hover {
+      text-decoration: underline;
+    }
+
+    .signup-btn {
+      width: 100%;
+      background: #0a3d62;
+      color: #fff;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .signup-btn:hover {
+      background: #07446e;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #0a3d62;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+      margin-top: 5px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.7s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="fade-in">
+
+  
+
+  <!-- Main Content (Sign Up Form) -->
+  <div class="signup-container" style="margin-top:100px;">
+    <h1>Join Horizon</h1>
+    <p>Create your free account and start investing today</p>
+
+    <form id="signupForm" novalidate>
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="John Doe" required />
+        <div class="text-gray-400 text-xs mt-1">e.g. John Doe</div>
+        <div class="error" id="nameError">Please enter your full name.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+        <div class="text-gray-400 text-xs mt-1">e.g. you@example.com</div>
+        <div class="error" id="emailError">Please enter a valid email.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="********" required minlength="6"/>
+        <div class="text-gray-400 text-xs mt-1">At least 6 characters</div>
+        <div class="error" id="passwordError">Password must be at least 6 characters.</div>
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="agree" required />
+        <label for="agree">I agree to the <a href="#">Terms & Conditions</a></label>
+      </div>
+
+      <button type="submit" class="signup-btn">Sign Up</button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Log in</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      feather.replace();
+
+      // Fade-in effect
+      document.body.classList.add('fade-in');
+
+      // Signup form validation and redirect
+      const form = document.getElementById('signupForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Basic validation
+        const name = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const agree = document.getElementById('agree');
+
+        let valid = true;
+
+        if (name.value.trim().length < 2) {
+          document.getElementById('nameError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('nameError').style.display = 'none';
+        }
+
+        // Simple email regex for better validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.value)) {
+          document.getElementById('emailError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('emailError').style.display = 'none';
+        }
+
+        if (password.value.length < 6) {
+          document.getElementById('passwordError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('passwordError').style.display = 'none';
+        }
+
+        if (!agree.checked) {
+          agree.focus();
+          valid = false;
+        }
+
+        if (valid) {
+          window.location.href = "dashboard.html";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

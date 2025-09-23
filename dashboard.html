@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Investment Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, rgba(11,27,103,0.9) 0%, rgba(40,60,134,0.9) 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      padding: 30px;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+    }
+    .balance-card {
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      padding: 25px;
+      border-radius: 12px;
+      color: #fff;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+    .balance-card:hover {
+      transform: translateY(-5px);
+    }
+    .balance-card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .balance-amount {
+      font-size: 3rem;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #f0f4f7;
+      font-weight: 600;
+      color: #444;
+    }
+    tr:hover {
+      background: #f9fcff;
+      transition: background 0.3s ease;
+    }
+    .positive { color: #27ae60; font-weight: 600; }
+    .negative { color: #e74c3c; font-weight: 600; }
+    .actions {
+      text-align: center;
+      margin-top: 25px;
+    }
+    .btn {
+      padding: 12px 28px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .deposit {
+      background: linear-gradient(135deg, rgba(11,27,103,0.9) 0%, rgba(40,60,134,0.9) 100%);
+      color: white;
+    }
+    .withdraw {
+      background: linear-gradient(135deg, #d3cce3, #e9e4f0);
+      color: #333;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+      .balance-amount { font-size: 2.2rem; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1> Live Investment Dashboard</h1>
+
+    <div class="balance-card">
+      <h2>Account Balance</h2>
+      <div class="balance-amount" id="balance">$0</div>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Current Price</th>
+            <th>Total Value</th>
+            <th>Change (24h)</th>
+          </tr>
+        </thead>
+        <tbody id="assets-table">
+          <!-- rows will go here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn deposit" onclick="alert('Deposit not implemented yet')">💰 Deposit</button>
+      <button class="btn withdraw" onclick="alert('Withdraw not implemented yet')">💸 Withdraw</button>
+    </div>
+
+  </div>
+
+  <script>
+    let assets = [
+      // Crypto (CoinCap)
+      { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: 0.75, price: 0, change: 0 },
+      { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: 2, price: 0, change: 0 },
+      { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: 1000, price: 0, change: 0 },
+      // ETFs (IEX Cloud)
+      { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: 10, price: 0, change: 0 },
+      { symbol: "ARKK", name: "ARK Innovation ETF", type: "ETF", quantity: 5, price: 0, change: 0 }
+    ];
+
+    const IEX_API_KEY = "YOUR_IEX_CLOUD_API_KEY"; // <-- Replace with your IEX Cloud API key
+
+    async function fetchLivePrices() {
+      // Fetch crypto prices from CoinCap
+      try {
+        const cryptoAssets = assets.filter(a => a.type === "Crypto");
+        if (cryptoAssets.length > 0) {
+          const symbols = cryptoAssets.map(a => a.symbol).join(',');
+          const url = `https://api.coincap.io/v2/assets?ids=${symbols}`;
+          const res = await fetch(url);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && Array.isArray(data.data)) {
+              data.data.forEach(assetData => {
+                const asset = assets.find(a => a.symbol === assetData.id);
+                if (asset) {
+                  asset.price = parseFloat(assetData.priceUsd) || 0;
+                  asset.change = parseFloat(assetData.changePercent24Hr) || 0;
+                }
+              });
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Failed to fetch crypto prices", e);
+      }
+
+      // Fetch ETF prices from IEX Cloud
+      try {
+        const etfAssets = assets.filter(a => a.type === "ETF");
+        if (etfAssets.length > 0 && IEX_API_KEY !== "YOUR_IEX_CLOUD_API_KEY") {
+          const symbols = etfAssets.map(a => a.symbol).join(',');
+          // Batch endpoint for quotes
+          const url = `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${IEX_API_KEY}`;
+          const res = await fetch(url);
+          if (res.ok) {
+            const data = await res.json();
+            etfAssets.forEach(asset => {
+              const quote = data[asset.symbol] && data[asset.symbol].quote;
+              if (quote) {
+                asset.price = quote.latestPrice || 0;
+                asset.change = quote.changePercent ? quote.changePercent * 100 : 0;
+              }
+            });
+          }
+        }
+      } catch (e) {
+        console.error("Failed to fetch ETF prices", e);
+      }
+    }
+
+    function renderDashboard() {
+      const totalBalance = assets.reduce((sum, a) => sum + (a.price * a.quantity || 0), 0);
+      document.getElementById("balance").textContent = `$${totalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      const tbody = document.getElementById("assets-table");
+      tbody.innerHTML = "";
+      assets.forEach(a => {
+        const totalValue = a.price * a.quantity;
+        const priceDisplay = a.price && a.price > 0
+          ? `$${a.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+          : "Loading...";
+        const totalValueDisplay = a.price && a.price > 0
+          ? `$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+          : "-";
+        const changeDisplay = typeof a.change === "number"
+          ? (a.change >= 0 ? "+" : "") + a.change.toFixed(2) + "%"
+          : "0.00%";
+        const changeClass = a.change >= 0 ? "positive" : "negative";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${a.name} (${a.symbol})</td>
+          <td>${a.type}</td>
+          <td>${a.quantity}</td>
+          <td>${priceDisplay}</td>
+          <td>${totalValueDisplay}</td>
+          <td class="${changeClass}">${changeDisplay}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function updateDashboard() {
+      await fetchLivePrices();
+      renderDashboard();
+    }
+    updateDashboard();
+    setInterval(updateDashboard, 30000); // 30 seconds for rate limit safety
+  </script>
+</body>
+</html>
+``` 
