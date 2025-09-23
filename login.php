@@ -134,7 +134,7 @@ if (!empty($last_updated)) {
           <input id="password" type="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" name="password" required>
           <div id="passwordError" class="text-red-500 text-sm mt-1 hidden">Password is required.</div>
         </div>
-        <button type="submit" class="w-full py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition">Login</button>
+        <button type="submit" name="user_login" class="w-full py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition">Login</button>
       </form>
       <div class="text-center mt-4">
         <span class="text-gray-600">Don't have an account?</span>
