@@ -202,21 +202,28 @@ if (isset($_REQUEST['email'])){
     <form id="signupForm" novalidate>
       <div class="form-group">
         <label for="fullName">Full Name</label>
-        <input type="text" id="fullName" placeholder="John Doe" required />
+        <input type="text" id="fullName" placeholder="John Doe" name="name" required />
         <div class="text-gray-400 text-xs mt-1">e.g. John Doe</div>
         <div class="error" id="nameError">Please enter your full name.</div>
       </div>
-
+      
+      <div class="form-group">
+        <label for="fullName">Username</label>
+        <input type="text" id="fullName" placeholder="Johndoe7" name="username" required />
+        <div class="text-gray-400 text-xs mt-1">e.g. Johndoe7</div>
+        <div class="error" id="nameError">Please enter uniquee username.</div>
+      </div>
+      
       <div class="form-group">
         <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="you@example.com" required />
+        <input type="email" id="email" placeholder="you@example.com" name="email" required />
         <div class="text-gray-400 text-xs mt-1">e.g. you@example.com</div>
         <div class="error" id="emailError">Please enter a valid email.</div>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="********" required minlength="6"/>
+        <input type="password" id="password" placeholder="********" name="password" required minlength="6"/>
         <div class="text-gray-400 text-xs mt-1">At least 6 characters</div>
         <div class="error" id="passwordError">Password must be at least 6 characters.</div>
       </div>
