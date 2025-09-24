@@ -290,7 +290,7 @@ if (isset($_REQUEST['email'])){
         }
 
         if (valid) {
-          window.location.href = "dashboard.php";
+          window.location.href = "login.php";
         }
       });
     });
