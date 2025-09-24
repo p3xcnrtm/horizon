@@ -161,8 +161,38 @@
   </style>
 </head>
 <body class="fade-in">
+<?php
+require('db.php');
+
+// If form submitted, insert values into the database.
+
+if (isset($_REQUEST['email'])){
+  $name = stripslashes($_REQUEST['name']);
+  $name = mysqli_real_escape_string($con,$name); 
+  $username = stripslashes($_REQUEST['username']);
+  $username = mysqli_real_escape_string($con,$username); 
+  $email = stripslashes($_REQUEST['email']);
+  $email = mysqli_real_escape_string($con,$email);
+  $password = stripslashes($_REQUEST['password']);
+  $password = mysqli_real_escape_string($con,$password);
+  $trn_date = date("Y-m-d H:i:s");
+    
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
   
+    $query = "INSERT INTO users (name, username, password, email, trn_date, ip_address, user_agent)
+              VALUES ('$name', '$username', '$password', '$email', '$trn_date', '$ip_address', '$user_agent')";
+
+   
+    $result = mysqli_query($con, $query);
+
+        if($result){
+            echo "<div class='form'> <h3>You are registered successfully.</h3>
+<br/>Click here to login to your account<a href='login.php'>Login</a></div>";
+        }
+    }else{
+?>
 
   <!-- Main Content (Sign Up Form) -->
   <div class="signup-container" style="margin-top:100px;">
@@ -258,5 +288,6 @@
       });
     });
   </script>
+  <?php } ?>
 </body>
 </html>
