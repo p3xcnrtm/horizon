@@ -237,7 +237,7 @@ if (isset($_REQUEST['email'])){
     </form>
 
     <div class="login-link">
-      Already have an account? <a href="login.html">Log in</a>
+      Already have an account? <a href="login.php">Log in</a>
     </div>
   </div>
 
