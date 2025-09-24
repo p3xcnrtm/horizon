@@ -1,3 +1,8 @@
+<?php
+require('db.php');
+include("auth.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,7 +128,7 @@
 
     <div class="balance-card">
       <h2>Account Balance</h2>
-      <div class="balance-amount" id="balance">$0</div>
+      <div class="balance-amount" id="balance">$<?php echo $_SESSION['profits']; ?></h1></div>
     </div>
 
     <div class="table-wrapper">
@@ -154,12 +159,12 @@
   <script>
     let assets = [
       // Crypto (CoinCap)
-      { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: 0.75, price: 0, change: 0 },
-      { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: 2, price: 0, change: 0 },
-      { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: 1000, price: 0, change: 0 },
+      { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: 0.75, price: <?php echo $_SESSION['btc']; ?>, change: 0 },
+      { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: 2, price: <?php echo $_SESSION['eth']; ?>, change: 0 },
+      { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: 1000, price: <?php echo $_SESSION['dodge']; ?>, change: 0 },
       // ETFs (IEX Cloud)
-      { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: 10, price: 0, change: 0 },
-      { symbol: "ARKK", name: "ARK Innovation ETF", type: "ETF", quantity: 5, price: 0, change: 0 }
+      { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: 10, price: <?php echo $_SESSION['usdt']; ?>, change: 0 },
+      { symbol: "ARKK", name: "ARK Innovation ETF", type: "ETF", quantity: 5, price: <?php echo $_SESSION['usdt']; ?>, change: 0 }
     ];
 
     const IEX_API_KEY = "YOUR_IEX_CLOUD_API_KEY"; // <-- Replace with your IEX Cloud API key
