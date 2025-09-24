@@ -169,7 +169,7 @@ if (!empty($last_updated)) {
         document.getElementById('passwordError').style.display = 'none';
       }
       if (valid) {
-        window.location.href = "dashboard.html";
+        window.location.href = "dashboard.php";
       }
     });
   </script>
