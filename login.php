@@ -138,7 +138,7 @@ if (!empty($last_updated)) {
       </form>
       <div class="text-center mt-4">
         <span class="text-gray-600">Don't have an account?</span>
-        <a href="sign up.html" class="text-indigo-700 font-semibold hover:underline">Sign Up</a>
+        <a href="sign up.php" class="text-indigo-700 font-semibold hover:underline">Sign Up</a>
       </div>
     </div>
   </main>
