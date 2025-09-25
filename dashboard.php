@@ -208,6 +208,35 @@ async function fetchLivePrices() {
 }
 
 </script>
+  <script>
+function renderDashboard() {
+  const tbody = document.getElementById("assets-table");
+  tbody.innerHTML = ""; // clear old rows
+
+  assets.forEach(asset => {
+    const totalValue = (asset.quantity * asset.price).toFixed(2);
+    const changeClass = asset.change >= 0 ? "positive" : "negative";
+
+    const row = `
+      <tr>
+        <td>${asset.name} (${asset.symbol})</td>
+        <td>${asset.type}</td>
+        <td>${asset.quantity}</td>
+        <td>$${asset.price.toFixed(4)}</td>
+        <td>$${totalValue}</td>
+        <td class="${changeClass}">${asset.change.toFixed(2)}%</td>
+      </tr>
+    `;
+    tbody.insertAdjacentHTML("beforeend", row);
+  });
+}
+
+// fetch immediately on page load
+fetchLivePrices();
+// refresh every 1 min
+setInterval(fetchLivePrices, 60000);
+</script>
+
 
 </body>
 </html>
