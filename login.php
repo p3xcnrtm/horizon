@@ -168,9 +168,7 @@ if (!empty($last_updated)) {
       } else {
         document.getElementById('passwordError').style.display = 'none';
       }
-      if (valid) {
-        window.location.href = "dashboard.php";
-      }
+      
     });
   </script>
 </body>
