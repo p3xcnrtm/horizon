@@ -1,14 +1,14 @@
-# Use official PHP CLI image
-FROM php:8.2-cli
+# Use official PHP + Apache image
+FROM php:8.2-apache
 
-# Set working directory inside the container
-WORKDIR /app
+# Enable Apache mod_rewrite (for pretty URLs if needed)
+RUN a2enmod rewrite
 
-# Copy all files from repo into container
-COPY . /app
+# Copy project files into Apache web root
+COPY . /var/www/html/
 
-# Expose a port (Render uses 10000 by default)
-EXPOSE 10000
+# Set working directory
+WORKDIR /var/www/html/
 
-# Start PHP built-in server
-CMD ["php", "-S", "0.0.0.0:10000", "index.php"]
+# Expose port
+EXPOSE 80
