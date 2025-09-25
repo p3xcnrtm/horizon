@@ -155,48 +155,58 @@ include("auth.php");
     </div>
 
   </div>
-<script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> 
+
   
   <script>
-  let assets = [
-    { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: <?php echo $_SESSION['btc']; ?>, price: 0, change: 0 },
-    { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: <?php echo $_SESSION['eth']; ?>, price: 0, change: 0 },
-    { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: <?php echo $_SESSION['dodge']; ?>, price: 0, change: 0 },
-    { symbol: "USDT", name: "USDT", type: "Crypto", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 },
-    { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 }
-  ];
+const LCW_API_KEY = "4d740457-16d7-483f-8c63-0e3705c4bc7c"; // replace with your LiveCoinWatch API key
 
-  function renderDashboard() {
-  const tbody = document.getElementById("assets-table");
-  tbody.innerHTML = "";
-  assets.forEach(a => {
-    const totalValue = a.price * a.quantity;
-    const priceDisplay = a.price > 0
-      ? `$${a.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-      : "-";
-    const totalValueDisplay = a.price > 0
-      ? `$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-      : "-";
-    const changeDisplay = (typeof a.change === "number")
-      ? (a.change >= 0 ? "+" : "") + a.change.toFixed(2) + "%"
-      : "0.00%";
-    const changeClass = a.change >= 0 ? "positive" : "negative";
+let assets = [
+  { symbol: "BTC", name: "Bitcoin", type: "Crypto", quantity: <?php echo $_SESSION['btc']; ?>, price: 0, change: 0 },
+  { symbol: "ETH", name: "Ethereum", type: "Crypto", quantity: <?php echo $_SESSION['eth']; ?>, price: 0, change: 0 },
+  { symbol: "DOGE", name: "Dogecoin", type: "Crypto", quantity: <?php echo $_SESSION['dodge']; ?>, price: 0, change: 0 },
+  { symbol: "USDT", name: "Tether", type: "Crypto", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 },
+  { symbol: "XLM", name: "Stellar", type: "Crypto", quantity: <?php echo $_SESSION['xlm']; ?>, price: 0, change: 0 }
+];
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${a.name} (${a.symbol})</td>
-      <td>${a.type}</td>
-      <td>${a.quantity}</td>
-      <td>${priceDisplay}</td>
-      <td>${totalValueDisplay}</td>
-      <td class="${changeClass}">${changeDisplay}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+
+
+async function fetchLivePrices() {
+  try {
+    const res = await fetch("https://api.livecoinwatch.com/coins/map", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": LCW_API_KEY
+      },
+      body: JSON.stringify({
+        currency: "USD",
+        codes: assets.map(a => a.symbol),
+        sort: "rank",
+        order: "ascending",
+        offset: 0,
+        limit: assets.length,
+        meta: true
+      })
+    });
+
+    const data = await res.json();
+
+    data.forEach(coin => {
+      const asset = assets.find(a => a.symbol === coin.code);
+      if (asset) {
+        asset.price = coin.rate || 0;                          // live price
+        asset.change = (coin.delta && coin.delta.day)          // live change
+          ? coin.delta.day * 100
+          : 0;
+      }
+    });
+
+    renderDashboard();
+  } catch (e) {
+    console.error("Failed to fetch prices", e);
+  }
 }
 
-
-  renderDashboard();
 </script>
 
 </body>
