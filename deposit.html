@@ -97,9 +97,9 @@
         <div id="cryptoPanel" style="display:none; margin-top:12px; padding:14px; border:1px solid #e2e8f0; border-radius:10px; background:#f8fafc;">
           <h2 style="margin:0 0 8px 0; font-size:16px; color:#0a3d62;">Crypto Wallet Addresses</h2>
           <div style="font-size:14px; line-height:1.6; color:#334155;">
-            <div><strong>USDT (TRC20):</strong> <code id="usdtTrc20">TV8XexampleTronAddress12345</code> <button type="button" class="copy-btn" data-copy="usdtTrc20">Copy</button></div>
-            <div><strong>BTC (SegWit):</strong> <code id="btcSegwit">bc1qexamplebtcaddress000000000</code> <button type="button" class="copy-btn" data-copy="btcSegwit">Copy</button></div>
-            <div><strong>ETH (ERC20):</strong> <code id="ethErc20">0x1234567890abcdef1234567890abcdef12345678</code> <button type="button" class="copy-btn" data-copy="ethErc20">Copy</button></div>
+            <div class="addr-row" data-network="TRC20" style="display:none;"><strong>USDT (TRC20):</strong> <code id="usdtTrc20">TV8XexampleTronAddress12345</code> <button type="button" class="copy-btn" data-copy="usdtTrc20">Copy</button></div>
+            <div class="addr-row" data-network="BTC" style="display:none;"><strong>BTC (SegWit):</strong> <code id="btcSegwit">bc1qexamplebtcaddress000000000</code> <button type="button" class="copy-btn" data-copy="btcSegwit">Copy</button></div>
+            <div class="addr-row" data-network="ERC20" style="display:none;"><strong>ETH (ERC20):</strong> <code id="ethErc20">0x1234567890abcdef1234567890abcdef12345678</code> <button type="button" class="copy-btn" data-copy="ethErc20">Copy</button></div>
             <div class="tip">Send only on the correct network (e.g., TRC20 for USDT TRC20). Network or token mismatches may result in loss of funds.</div>
           </div>
         </div>
@@ -176,6 +176,17 @@
           }
         }
       });
+      
+      // Show only selected crypto address
+      function updateCryptoAddresses() {
+        const net = (cryptoNetworkEl.value || '').trim();
+        document.querySelectorAll('#cryptoPanel .addr-row').forEach(row => {
+          row.style.display = (row.getAttribute('data-network') === net && methodEl.value === 'crypto') ? '' : 'none';
+        });
+      }
+      cryptoNetworkEl.addEventListener('change', updateCryptoAddresses);
+      methodEl.addEventListener('change', updateCryptoAddresses);
+      updateCryptoAddresses();
     })();
   </script>
 </body>
