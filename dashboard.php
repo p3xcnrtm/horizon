@@ -150,27 +150,58 @@ include("auth.php");
     </div>
 
     <div class="actions">
-      <button class="btn deposit" onclick="alert('deposit.html')">💰 Deposit</button>
-      <button class="btn withdraw" onclick="alert('withdraw.html')">💸 Withdraw</button>
+      <a href ="deposit.html 'button class="btn deposit">Deposit</button>
+      <a href ="withdraw.html 'button class="btn withdraw">Deposit</button>
     </div>
 
   </div>
 <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> 
   
   <script>
-    let assets = [
-      // Crypto (CoinCap)
-      { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: <?php echo $_SESSION['btc']; ?>, price: 0, change: 0 },
-      { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: <?php echo $_SESSION['eth']; ?>, price: 0, change: 0 },
-      { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: <?php echo $_SESSION['dodge']; ?>, price: 0, change: 0 },
-       { symbol: "USDT", name: "USDT", type: "Crypto", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 },
-      // ETFs (IEX Cloud)
-      { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 }
-     
-    ];
+  let assets = [
+    { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: <?php echo $_SESSION['btc']; ?>, price: 0, change: 0 },
+    { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: <?php echo $_SESSION['eth']; ?>, price: 0, change: 0 },
+    { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: <?php echo $_SESSION['dodge']; ?>, price: 0, change: 0 },
+    { symbol: "USDT", name: "USDT", type: "Crypto", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 },
+    { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 }
+  ];
 
-   
-  </script>
+  function renderDashboard() {
+    const totalBalance = assets.reduce((sum, a) => sum + (a.price * a.quantity || 0), 0);
+    document.getElementById("balance").textContent =
+      `$${totalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    
+    const tbody = document.getElementById("assets-table");
+    tbody.innerHTML = "";
+    assets.forEach(a => {
+      const totalValue = a.price * a.quantity;
+      const priceDisplay = a.price > 0
+        ? `$${a.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+        : "-";
+      const totalValueDisplay = a.price > 0
+        ? `$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+        : "-";
+      const changeDisplay = (typeof a.change === "number")
+        ? (a.change >= 0 ? "+" : "") + a.change.toFixed(2) + "%"
+        : "0.00%";
+      const changeClass = a.change >= 0 ? "positive" : "negative";
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${a.name} (${a.symbol})</td>
+        <td>${a.type}</td>
+        <td>${a.quantity}</td>
+        <td>${priceDisplay}</td>
+        <td>${totalValueDisplay}</td>
+        <td class="${changeClass}">${changeDisplay}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  renderDashboard();
+</script>
+
 </body>
 </html>
 ``` 
