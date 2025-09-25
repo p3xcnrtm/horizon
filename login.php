@@ -123,7 +123,7 @@ if (!empty($last_updated)) {
   <main class="flex-grow flex items-center justify-center py-16">
     <div class="bg-white rounded-xl shadow-xl p-8 max-w-md w-full">
       <h2 class="text-2xl font-bold mb-6 text-indigo-800 text-center">Login to Horizon</h2>
-      <form id="loginForm" class="space-y-5">
+      <form id="loginForm" class="space-y-5" method="POST" action="">
         <div>
           <label for="email" class="block text-gray-700 mb-1">Email</label>
           <input id="email" type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" name="email" required>
@@ -168,7 +168,9 @@ if (!empty($last_updated)) {
       } else {
         document.getElementById('passwordError').style.display = 'none';
       }
-      
+       if (!valid) {
+        window.location.href = "login.php";
+      }
     });
   </script>
 </body>
