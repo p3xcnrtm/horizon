@@ -151,27 +151,31 @@ if (!empty($last_updated)) {
   <script>
     // Example login redirect logic
     const form = document.getElementById('loginForm');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('email');
-      const password = document.getElementById('password');
-      let valid = true;
-      if (!email.value.includes('@')) {
-        document.getElementById('emailError').style.display = 'block';
-        valid = false;
-      } else {
-        document.getElementById('emailError').style.display = 'none';
-      }
-      if (password.value.trim() === '') {
-        document.getElementById('passwordError').style.display = 'block';
-        valid = false;
-      } else {
-        document.getElementById('passwordError').style.display = 'none';
-      }
-       if (!valid) {
-        window.location.href = "login.php";
-      }
-    });
+   form.addEventListener('submit', function(e) {
+  let valid = true;
+
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
+
+  if (!email.value.includes('@')) {
+    document.getElementById('emailError').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('emailError').style.display = 'none';
+  }
+
+  if (password.value.trim() === '') {
+    document.getElementById('passwordError').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('passwordError').style.display = 'none';
+  }
+
+  if (!valid) {
+    e.preventDefault(); // only stop submission if invalid
+  }
+});
+
   </script>
 </body>
 </html>
