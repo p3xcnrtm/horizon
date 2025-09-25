@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw | Horizon Capital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, rgba(11,27,103,0.9) 0%, rgba(40,60,134,0.9) 100%); margin: 0; min-height: 100vh; color: #0f172a; }
+    .wrapper { max-width: 720px; margin: 0 auto; padding: 32px 16px; }
+    .card { background: #fff; margin-top: 90px; border-radius: 16px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    h1 { margin: 0 0 16px 0; font-size: 24px; color: #0a3d62; }
+    label { display:block; margin: 12px 0 6px; font-weight: 600; }
+    input, select, textarea { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 16px; outline: none; }
+    textarea { resize: vertical; min-height: 80px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn { margin-top: 16px; background: #0a3d62; color: #fff; border: 0; padding: 12px 16px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; }
+    .btn:hover { background: #07446e; }
+    .nav { position:fixed; top:0; left:0; right:0; z-index:50; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; color:#fff; }
+    .brand { font-weight: 700; font-size: 20px; }
+    .links a { color:#fff; text-decoration:none; margin-left:16px; }
+    .tip { color:#64748b; font-size: 13px; margin-top: 6px; }
+    .panel { margin-top:12px; padding:14px; border:1px solid #e2e8f0; border-radius:10px; background:#f8fafc; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">HORIZON</div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="deposit.html">Deposit</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrapper">
+    <div class="card">
+      <h1>Request Withdrawal</h1>
+      <form id="withdrawForm" method="post" action="withdraw.php" novalidate>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+        <div class="row">
+          <div>
+            <label for="amount">Amount</label>
+            <input type="number" step="0.01" min="1" id="amount" name="amount" placeholder="1000" required />
+          </div>
+          <div>
+            <label for="currency">Currency</label>
+            <select id="currency" name="currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="method">Payout Method</label>
+        <select id="method" name="method" required>
+          <option value="">Select a method</option>
+          <option value="bank_transfer">Bank Transfer</option>
+          <option value="crypto">Crypto</option>
+        </select>
+        <div id="methodHelp" class="tip">Choose a payout method. For crypto, you must specify the correct network.</div>
+
+        <!-- Crypto network (only visible when method = crypto) -->
+        <div id="cryptoNetworkRow" class="row" style="display:none; margin-top:4px;">
+          <div style="grid-column: 1 / -1;">
+            <label for="cryptoNetwork">Crypto Network</label>
+            <select id="cryptoNetwork" name="crypto_network">
+              <option value="">Select network</option>
+              <option value="TRC20">USDT (TRC20)</option>
+              <option value="BTC">BTC (SegWit)</option>
+              <option value="ERC20">ETH (ERC20)</option>
+            </select>
+            <div class="tip">Include the selected network (e.g., TRC20, BTC, ERC20) in the destination details.</div>
+          </div>
+        </div>
+
+        <label for="destination">Destination Details</label>
+        <textarea id="destination" name="destination" placeholder="Bank account or crypto wallet details" required></textarea>
+
+        <!-- Instruction panels -->
+        <div id="bankPanel" class="panel" style="display:none;">
+          <h2 style="margin:0 0 8px 0; font-size:16px; color:#0a3d62;">Bank Transfer Payout</h2>
+          <div class="tip">Provide your beneficiary bank details (account name/number, bank name, SWIFT/IBAN). Ensure details are accurate to avoid delays.</div>
+        </div>
+        <div id="cryptoPanel" class="panel" style="display:none;">
+          <h2 style="margin:0 0 8px 0; font-size:16px; color:#0a3d62;">Crypto Payout</h2>
+          <div class="tip">Provide the destination wallet address. Ensure the network matches the selection above (e.g., TRC20 for USDT, ERC20 for ETH, BTC SegWit address).</div>
+        </div>
+
+        <button class="btn" type="submit">Submit Withdrawal</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const methodEl = document.getElementById('method');
+      const helpEl = document.getElementById('methodHelp');
+      const cryptoNetworkRow = document.getElementById('cryptoNetworkRow');
+      const cryptoNetworkEl = document.getElementById('cryptoNetwork');
+      const bankPanel = document.getElementById('bankPanel');
+      const cryptoPanel = document.getElementById('cryptoPanel');
+      const form = document.getElementById('withdrawForm');
+
+      function updatePanels() {
+        const val = methodEl.value;
+        if (val === 'bank_transfer') {
+          cryptoNetworkRow.style.display = 'none';
+          bankPanel.style.display = '';
+          cryptoPanel.style.display = 'none';
+          helpEl.textContent = 'You selected Bank Transfer. Enter complete beneficiary bank details in Destination.';
+        } else if (val === 'crypto') {
+          cryptoNetworkRow.style.display = '';
+          bankPanel.style.display = 'none';
+          cryptoPanel.style.display = '';
+          helpEl.textContent = 'You selected Crypto. Choose the network and ensure the destination matches it.';
+        } else {
+          cryptoNetworkRow.style.display = 'none';
+          bankPanel.style.display = 'none';
+          cryptoPanel.style.display = 'none';
+          helpEl.textContent = 'Choose a payout method. For crypto, you must specify the correct network.';
+        }
+      }
+
+      methodEl.addEventListener('change', updatePanels);
+      updatePanels();
+
+      // Validation: when crypto, require network and ensure destination mentions it
+      form.addEventListener('submit', (e) => {
+        if (methodEl.value === 'crypto') {
+          const net = (cryptoNetworkEl.value || '').trim();
+          if (!net) {
+            e.preventDefault();
+            alert('Please select a Crypto Network.');
+            return;
+          }
+          const dest = (document.getElementById('destination').value || '').toUpperCase();
+          if (!dest.includes(net)) {
+            e.preventDefault();
+            alert('Destination must include the selected network keyword: ' + net + '.');
+            return;
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
