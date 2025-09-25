@@ -150,8 +150,8 @@ include("auth.php");
     </div>
 
     <div class="actions">
-      <button class="btn deposit" onclick="alert('Deposit not implemented yet')">💰 Deposit</button>
-      <button class="btn withdraw" onclick="alert('Withdraw not implemented yet')">💸 Withdraw</button>
+      <button class="btn deposit" onclick="alert('deposit.html')">💰 Deposit</button>
+      <button class="btn withdraw" onclick="alert('withdraw.html')">💸 Withdraw</button>
     </div>
 
   </div>
