@@ -150,8 +150,8 @@ include("auth.php");
     </div>
 
     <div class="actions">
-      <a href ="deposit.html 'button class="btn deposit">Deposit</button>
-      <a href ="withdraw.html 'button class="btn withdraw">Deposit</button>
+     <button class="btn deposit" onclick="alert('Deposit not implemented yet')">💰 Deposit</button>
+      <button class="btn withdraw" onclick="alert('Withdraw not implemented yet')">💸 Withdraw</button>
     </div>
 
   </div>
@@ -167,41 +167,37 @@ include("auth.php");
   ];
 
   function renderDashboard() {
-    const totalBalance = assets.reduce((sum, a) => sum + (a.price * a.quantity || 0), 0);
-    document.getElementById("balance").textContent =
-      `$${totalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-    
-    const tbody = document.getElementById("assets-table");
-    tbody.innerHTML = "";
-    assets.forEach(a => {
-      const totalValue = a.price * a.quantity;
-      const priceDisplay = a.price > 0
-        ? `$${a.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-        : "-";
-      const totalValueDisplay = a.price > 0
-        ? `$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-        : "-";
-      const changeDisplay = (typeof a.change === "number")
-        ? (a.change >= 0 ? "+" : "") + a.change.toFixed(2) + "%"
-        : "0.00%";
-      const changeClass = a.change >= 0 ? "positive" : "negative";
+  const tbody = document.getElementById("assets-table");
+  tbody.innerHTML = "";
+  assets.forEach(a => {
+    const totalValue = a.price * a.quantity;
+    const priceDisplay = a.price > 0
+      ? `$${a.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+      : "-";
+    const totalValueDisplay = a.price > 0
+      ? `$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+      : "-";
+    const changeDisplay = (typeof a.change === "number")
+      ? (a.change >= 0 ? "+" : "") + a.change.toFixed(2) + "%"
+      : "0.00%";
+    const changeClass = a.change >= 0 ? "positive" : "negative";
 
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${a.name} (${a.symbol})</td>
-        <td>${a.type}</td>
-        <td>${a.quantity}</td>
-        <td>${priceDisplay}</td>
-        <td>${totalValueDisplay}</td>
-        <td class="${changeClass}">${changeDisplay}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${a.name} (${a.symbol})</td>
+      <td>${a.type}</td>
+      <td>${a.quantity}</td>
+      <td>${priceDisplay}</td>
+      <td>${totalValueDisplay}</td>
+      <td class="${changeClass}">${changeDisplay}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
 
   renderDashboard();
 </script>
 
 </body>
 </html>
-``` 
