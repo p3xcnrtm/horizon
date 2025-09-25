@@ -155,7 +155,8 @@ include("auth.php");
     </div>
 
   </div>
-
+<script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> 
+  
   <script>
     let assets = [
       // Crypto (CoinCap)
@@ -168,93 +169,7 @@ include("auth.php");
      
     ];
 
-    const IEX_API_KEY = "YOUR_IEX_CLOUD_API_KEY"; // <-- Replace with your IEX Cloud API key
-
-    async function fetchLivePrices() {
-      // Fetch crypto prices from CoinCap
-      try {
-        const cryptoAssets = assets.filter(a => a.type === "Crypto");
-        if (cryptoAssets.length > 0) {
-          const symbols = cryptoAssets.map(a => a.symbol).join(',');
-          const url = `https://api.coincap.io/v2/assets?ids=${symbols}`;
-          const res = await fetch(url);
-          if (res.ok) {
-            const data = await res.json();
-            if (data && Array.isArray(data.data)) {
-              data.data.forEach(assetData => {
-                const asset = assets.find(a => a.symbol === assetData.id);
-                if (asset) {
-                  asset.price = parseFloat(assetData.priceUsd) || 0;
-                  asset.change = parseFloat(assetData.changePercent24Hr) || 0;
-                }
-              });
-            }
-          }
-        }
-      } catch (e) {
-        console.error("Failed to fetch crypto prices", e);
-      }
-
-      // Fetch ETF prices from IEX Cloud
-      try {
-        const etfAssets = assets.filter(a => a.type === "ETF");
-        if (etfAssets.length > 0 && IEX_API_KEY !== "YOUR_IEX_CLOUD_API_KEY") {
-          const symbols = etfAssets.map(a => a.symbol).join(',');
-          // Batch endpoint for quotes
-          const url = `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${IEX_API_KEY}`;
-          const res = await fetch(url);
-          if (res.ok) {
-            const data = await res.json();
-            etfAssets.forEach(asset => {
-              const quote = data[asset.symbol] && data[asset.symbol].quote;
-              if (quote) {
-                asset.price = quote.latestPrice || 0;
-                asset.change = quote.changePercent ? quote.changePercent * 100 : 0;
-              }
-            });
-          }
-        }
-      } catch (e) {
-        console.error("Failed to fetch ETF prices", e);
-      }
-    }
-
-    function renderDashboard() {
-      const totalBalance = assets.reduce((sum, a) => sum + (a.price * a.quantity || 0), 0);
-      document.getElementById("balance").textContent = `$${totalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-      const tbody = document.getElementById("assets-table");
-      tbody.innerHTML = "";
-      assets.forEach(a => {
-        const totalValue = a.price * a.quantity;
-        const priceDisplay = a.price && a.price > 0
-          ? `$${a.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-          : "Loading...";
-        const totalValueDisplay = a.price && a.price > 0
-          ? `$${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-          : "-";
-        const changeDisplay = typeof a.change === "number"
-          ? (a.change >= 0 ? "+" : "") + a.change.toFixed(2) + "%"
-          : "0.00%";
-        const changeClass = a.change >= 0 ? "positive" : "negative";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${a.name} (${a.symbol})</td>
-          <td>${a.type}</td>
-          <td>${a.quantity}</td>
-          <td>${priceDisplay}</td>
-          <td>${totalValueDisplay}</td>
-          <td class="${changeClass}">${changeDisplay}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    async function updateDashboard() {
-      await fetchLivePrices();
-      renderDashboard();
-    }
-    updateDashboard();
-    setInterval(updateDashboard, 30000); // 30 seconds for rate limit safety
+   
   </script>
 </body>
 </html>
