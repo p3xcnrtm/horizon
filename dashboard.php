@@ -128,7 +128,7 @@ include("auth.php");
 
     <div class="balance-card">
       <h2>Account Balance</h2>
-      <div class="balance-amount" id="balance">$<?php echo $_SESSION['profits']; ?></h1></div>
+      <div class="balance-amount" id="balance">$ <?php echo $_SESSION['profits']; ?> </h1></div>
     </div>
 
     <div class="table-wrapper">
