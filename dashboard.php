@@ -159,12 +159,13 @@ include("auth.php");
   <script>
     let assets = [
       // Crypto (CoinCap)
-      { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: 0.75, price: <?php echo $_SESSION['btc']; ?>, change: 0 },
-      { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: 2, price: <?php echo $_SESSION['eth']; ?>, change: 0 },
-      { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: 1000, price: <?php echo $_SESSION['dodge']; ?>, change: 0 },
+      { symbol: "bitcoin", name: "Bitcoin", type: "Crypto", quantity: <?php echo $_SESSION['btc']; ?>, price: 0, change: 0 },
+      { symbol: "ethereum", name: "Ethereum", type: "Crypto", quantity: <?php echo $_SESSION['eth']; ?>, price: 0, change: 0 },
+      { symbol: "dogecoin", name: "Dogecoin", type: "Crypto", quantity: <?php echo $_SESSION['dodge']; ?>, price: 0, change: 0 },
+       { symbol: "USDT", name: "USDT", type: "Crypto", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 },
       // ETFs (IEX Cloud)
-      { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: 10, price: <?php echo $_SESSION['usdt']; ?>, change: 0 },
-      { symbol: "ARKK", name: "ARK Innovation ETF", type: "ETF", quantity: 5, price: <?php echo $_SESSION['usdt']; ?>, change: 0 }
+      { symbol: "VOO", name: "Vanguard S&P 500 ETF", type: "ETF", quantity: <?php echo $_SESSION['usdt']; ?>, price: 0, change: 0 }
+     
     ];
 
     const IEX_API_KEY = "YOUR_IEX_CLOUD_API_KEY"; // <-- Replace with your IEX Cloud API key
