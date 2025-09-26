@@ -149,10 +149,11 @@ include("auth.php");
       </table>
     </div>
 
-    <div class="actions">
-     <button class="btn deposit" onclick="alert('Deposit not implemented yet')">💰 Deposit</button>
-      <button class="btn withdraw" onclick="alert('Withdraw not implemented yet')">💸 Withdraw</button>
-    </div>
+   <div class="actions">
+  <button class="btn deposit" onclick="window.location.href='deposit.html'">💰 Deposit</button>
+  <button class="btn withdraw" onclick="window.location.href='withdraw.html'">💸 Withdraw</button>
+</div>
+
 
   </div>
 
